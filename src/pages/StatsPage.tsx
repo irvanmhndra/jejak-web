@@ -117,6 +117,14 @@ function describe(r: PersonalRecord): [string, string] {
       return ['Elevasi terbanyak', formatElevation(r.value)]
     case 'fastest_speed':
       return ['Tercepat', formatPaceOrSpeed(r.activity_type, r.value)]
+    case 'fastest_5k':
+      return ['5K tercepat', formatDuration(Math.round(r.value))]
+    case 'fastest_10k':
+      return ['10K tercepat', formatDuration(Math.round(r.value))]
+    case 'fastest_half':
+      return ['Half tercepat', formatDuration(Math.round(r.value))]
+    case 'fastest_full':
+      return ['Full tercepat', formatDuration(Math.round(r.value))]
     default:
       return [r.record_type, String(Math.round(r.value))]
   }
