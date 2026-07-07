@@ -7,6 +7,7 @@ import LoginPage from './pages/auth/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import ActivityDetailPage from './pages/ActivityDetailPage'
+import HeatmapPage from './pages/HeatmapPage'
 import StatsPage from './pages/StatsPage'
 
 const queryClient = new QueryClient({
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/activities/:id" element={<ActivityDetailPage />} />
+            <Route path="/heatmap" element={<HeatmapPage />} />
             <Route path="/stats" element={<StatsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
