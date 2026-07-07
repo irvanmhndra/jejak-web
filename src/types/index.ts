@@ -66,3 +66,11 @@ export interface PersonalRecord {
   activity_id: string
   achieved_at: string
 }
+
+export interface Goal {
+  id: string
+  period: 'weekly' | 'monthly'
+  activity_type?: string | null
+  target_meters: number
+  current_meters: number
+}

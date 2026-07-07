@@ -1,4 +1,4 @@
-import { Activity, BarChart3, LayoutDashboard, LogOut, Map } from 'lucide-react'
+import { Activity, BarChart3, LayoutDashboard, LogOut, Map, Target } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 
@@ -6,6 +6,7 @@ const nav = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/activities', label: 'Aktivitas', icon: Activity, end: false },
   { to: '/heatmap', label: 'Heatmap', icon: Map, end: false },
+  { to: '/goals', label: 'Target', icon: Target, end: false },
   { to: '/stats', label: 'Statistik', icon: BarChart3, end: false },
 ]
 

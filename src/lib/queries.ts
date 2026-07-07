@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../config/api'
-import type { Activity, ActivityDetail, PersonalRecord, StatsSummary } from '../types'
+import type { Activity, ActivityDetail, Goal, PersonalRecord, StatsSummary } from '../types'
 
 export function useActivities() {
   return useQuery({
@@ -85,6 +85,38 @@ export function useImportGPX() {
       return api.post('/activities/import', form)
     },
     onSuccess: invalidate,
+  })
+}
+
+export function useGoals() {
+  return useQuery({
+    queryKey: ['goals'],
+    queryFn: async (): Promise<Goal[]> => {
+      const res = await api.get('/goals')
+      return res.data.data
+    },
+  })
+}
+
+export interface GoalInput {
+  period: 'weekly' | 'monthly'
+  activity_type?: string
+  target_meters: number
+}
+
+export function useCreateGoal() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (input: GoalInput) => api.post('/goals', input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['goals'] }),
+  })
+}
+
+export function useDeleteGoal() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => api.delete(`/goals/${id}`),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['goals'] }),
   })
 }
 
