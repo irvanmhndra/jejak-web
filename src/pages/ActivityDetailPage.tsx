@@ -1,4 +1,4 @@
-import { ArrowLeft, Download, Trash2 } from 'lucide-react'
+import { ArrowLeft, Download, Share2, Trash2 } from 'lucide-react'
 import { CircleMarker, MapContainer, Polyline, TileLayer } from 'react-leaflet'
 import type { LatLngExpression, LatLngBoundsExpression } from 'leaflet'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
@@ -15,6 +15,7 @@ import {
   isPaceBased,
 } from '../lib/format'
 import { downloadGPX, useActivity, useDeleteActivity } from '../lib/queries'
+import { shareActivityImage } from '../lib/shareCard'
 import type { ActivityDetail } from '../types'
 
 export default function ActivityDetailPage() {
@@ -49,6 +50,12 @@ export default function ActivityDetailPage() {
           </div>
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={() => shareActivityImage(data, data.points)}
+            className="flex items-center gap-2 rounded-lg bg-primary-500 px-3 py-2 text-sm font-semibold text-white hover:bg-primary-600"
+          >
+            <Share2 size={16} /> Bagikan
+          </button>
           <button
             onClick={() => downloadGPX(data.id, data.title)}
             className="flex items-center gap-2 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-semibold hover:bg-stone-50"
