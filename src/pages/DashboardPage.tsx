@@ -1,12 +1,15 @@
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Link } from 'react-router-dom'
 import { ActivityIcon } from '../lib/activityIcon'
 import { formatDateTime, formatDuration, formatKm } from '../lib/format'
 import { useActivities, useStats } from '../lib/queries'
+import { weeklyTrend } from '../lib/trend'
 import type { Activity, PeriodTotals } from '../types'
 
 export default function DashboardPage() {
   const stats = useStats()
   const activities = useActivities()
+  const trend = activities.data ? weeklyTrend(activities.data, 12) : []
 
   return (
     <div className="space-y-8">
@@ -17,6 +20,21 @@ export default function DashboardPage() {
         <PeriodCard label="Bulan Ini" totals={stats.data?.month} loading={stats.isLoading} />
         <PeriodCard label="Sepanjang Waktu" totals={stats.data?.all_time} loading={stats.isLoading} />
       </div>
+
+      {trend.some((w) => w.km > 0) && (
+        <div className="card">
+          <p className="mb-4 text-sm font-semibold text-stone-500">Tren Mingguan (km) — 12 minggu terakhir</p>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={trend} margin={{ left: -20, right: 8, top: 4 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e7e5e4" vertical={false} />
+              <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={11} interval="preserveStartEnd" />
+              <YAxis tickLine={false} axisLine={false} fontSize={11} unit=" km" />
+              <Tooltip cursor={{ fill: '#fff3ed' }} formatter={(v) => [`${v} km`, 'Jarak']} />
+              <Bar dataKey="km" fill="#fc4c02" radius={[6, 6, 0, 0]} maxBarSize={40} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       <div>
         <div className="mb-3 flex items-center justify-between">
